@@ -16,7 +16,7 @@
                 <span>{{product.price}}/-</span>
                 <span>Stock: {{product.stock}}</span>
             </div>
-            <button class="order-btn">Order Now</button>
+            <a href="{% url 'checkout' product.id %}" class="order-btn">Order Now</a>
         </div>
     </div>
 
