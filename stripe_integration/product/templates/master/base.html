@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: #156082;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: white;
+            letter-spacing: 1px;
+        }
+
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar ul li a {
+            text-decoration: none;
+            font-size: 16px;
+            color: white;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .navbar ul li a:hover {
+            color: #222;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 30px 0;
+            color: #333;
+        }
+
+        .product-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            /* 4 cards in one row */
+            gap: 20px;
+            padding: 20px 40px;
+        }
+
+
+        .product-card {
+            background: #fff;
+            width: 100%;
+            /* let grid handle the width */
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .product-info h2 {
+            font-size: 20px;
+            margin: 0;
+            color: #222;
+        }
+
+        .product-info p {
+            font-size: 14px;
+            color: #666;
+            margin: 10px 0;
+            flex-grow: 1;
+            word-wrap: break-word;
+        }
+
+        .price-stock {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            font-weight: bold;
+            color: #444;
+        }
+
+        .order-btn {
+            background: #156082;
+            border: none;
+            color: white;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            text-align: center;
+        }
+
+        .order-btn:hover {
+            background: #035160;
+        }
+
+        @media (max-width: 1024px) {
+            .product-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .product-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    {% include 'master/nav.html' %}
+
+    {% block content %}
+
+    {% endblock content %}
+
+
+</body>
+
+</html>

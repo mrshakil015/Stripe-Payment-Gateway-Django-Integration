@@ -1,0 +1,29 @@
+{% extends 'master/base.html' %}
+
+{% block content %}
+<h1>Product List</h1>
+
+<div class="product-container">
+    <!-- Product Card Example -->
+
+    {% for product in product_data %}
+    <div class="product-card">
+        <img src="{{product.image.url}}" alt="Product Image" class="product-image">
+        <div class="product-info">
+            <h2>{{product.name}}</h2>
+            <p>{{product.description}}</p>
+            <div class="price-stock">
+                <span>{{product.price}}/-</span>
+                <span>Stock: {{product.stock}}</span>
+            </div>
+            <button class="order-btn">Order Now</button>
+        </div>
+    </div>
+
+    {% endfor %}
+
+
+
+</div>
+
+{% endblock content %}
