@@ -138,6 +138,7 @@ That’s why **webhooks are essential** to mark an order as paid.
 
 ```python
 from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
 
 @csrf_exempt
 def stripeWebhookView(request):
@@ -153,7 +154,6 @@ def stripeWebhookView(request):
     except ValueError as e:
         return HttpResponse(status=400)
     except stripe.error.SignatureVerificationError as e:
-        
         print(f'Error verifying webhook signature: {e}')
         return HttpResponse(status=400)
 
@@ -168,15 +168,16 @@ def stripeWebhookView(request):
             )
             order.is_paid = True
             order.save()
+
             product = order.product
             product.stock -= 1
             product.save()
+
             print('Order marked as paid!')
-            return redirect('success')
         except OrderModel.DoesNotExist:
             print("⚠️ Order not found for PaymentIntent:", session['id'])
 
-    return redirect('success')
+    return HttpResponse(status=200)
 
 ```
 

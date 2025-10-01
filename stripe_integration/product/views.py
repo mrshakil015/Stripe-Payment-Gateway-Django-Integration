@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from product.models import *
 from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse, HttpResponse
+from django.http import HttpResponse
 from django.conf import settings
 import stripe
 
@@ -75,7 +75,6 @@ def stripeWebhookView(request):
     except ValueError as e:
         return HttpResponse(status=400)
     except stripe.error.SignatureVerificationError as e:
-        
         print(f'Error verifying webhook signature: {e}')
         return HttpResponse(status=400)
 
@@ -90,12 +89,13 @@ def stripeWebhookView(request):
             )
             order.is_paid = True
             order.save()
+
             product = order.product
             product.stock -= 1
             product.save()
+
             print('Order marked as paid!')
-            return redirect('success')
         except OrderModel.DoesNotExist:
             print("⚠️ Order not found for PaymentIntent:", session['id'])
 
-    return redirect('success')
+    return HttpResponse(status=200)
