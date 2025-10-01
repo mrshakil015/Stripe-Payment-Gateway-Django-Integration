@@ -207,31 +207,39 @@ Stripe sends **events** (like successful payments) to your app via webhooks.
 
 ngrok exposes your local server to the internet.
 
-1. Download ngrok: https://ngrok.com/download
-2. Unzip and place `ngrok` in a known directory.
-3. Run your Django server:
-
+1. Create account on the ngrok website
+2. Download ngrok: https://ngrok.com/download
+3. Install `ngrok` 
+4. After that run ngrok and configure using authentication token. Without create account you cannot find the token
+    
+    ```bash
+    ngrok config add-authtoken <token>
+    ```
+    
+5. Run your Django server:
+    
     ```bash
     python manage.py runserver
     ```
-
-1. Open a new terminal and start ngrok on the same port (usually 8000):
-
+    
+6. Open a new terminal and start ngrok on the same port (usually 8000):
+    
     ```bash
     ngrok http 8000
     ```
-
-1. ngrok will display a **public URL**, e.g.:
-
+    
+7. ngrok will display a **public URL**, e.g.:
+    
     ```
     Forwarding    https://abcd1234.ngrok.io -> http://127.0.0.1:8000
     ```
-
-1. Use this **ngrok URL** as the webhook URL in Stripe Dashboard:
-
+    
+8. Use this **ngrok URL** as the webhook URL in Stripe Dashboard:
+    
     ```
     https://abcd1234.ngrok.io/stripe-webhook/
     ```
+    
 
 ## 📖 10. Test Payment with Test Cards
 
