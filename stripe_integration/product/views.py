@@ -93,6 +93,9 @@ def stripeWebhookView(request):
             )
             order.is_paid = True
             order.save()
+            product = order.product
+            product.stock -= 1
+            product.save()
             print('Order marked as paid!')
             return redirect('success')
         except OrderModel.DoesNotExist:
