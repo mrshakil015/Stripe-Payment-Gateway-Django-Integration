@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-z1=ju3-w##f5zk(j=-i86oo-ez+o8qm)pp@-)-em=7%mesk+-h
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -115,3 +115,6 @@ MEDIA_ROOT = BASE_DIR / 'media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STRIPE_SECRET_KEY = config("STRIPE_SECRET_KEY")
+STRIPE_WEBHOOK_SECRET = config("STRIPE_WEBHOOK_SECRET")
+
+CSRF_TRUSTED_ORIGINS = ["https://nonmonistically-unbothering-loretta.ngrok-free.dev"]

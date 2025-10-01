@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from product.models import *
-from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse, HttpResponse
 from django.conf import settings
 import stripe
 
@@ -25,11 +26,11 @@ def CheckoutView(request, product_id):
 
 def success(request):
     
-    return JsonResponse({"status":"Success"})
+    return render(request,'product/payment-success.html')
 
 def cancel(request):
     
-    return JsonResponse({"status":"Cancel"})
+    return render(request,'product/payment-cancel.html')
 
 def createPaymentView(request, product_id):
     YOUR_DOMAIN = "http://127.0.0.1:8000"
@@ -61,3 +62,42 @@ def createPaymentView(request, product_id):
     order.save()
     return redirect(checkout_session.url)
     
+@csrf_exempt
+def stripeWebhookView(request):
+    payload = request.body
+    sig_header = request.META.get('HTTP_STRIPE_SIGNATURE')
+    endpoint_secret = settings.STRIPE_WEBHOOK_SECRET
+    event = None
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, endpoint_secret
+        )
+    except ValueError as e:
+        # Invalid payload
+        print(f'Error parsing payload: {e}')
+        return HttpResponse(status=400)
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid signature
+        print(f'Error verifying webhook signature: {e}')
+        return HttpResponse(status=400)
+
+    # Handle the event
+    if event['type'] == 'checkout.session.completed':
+        session = event['data']['object']
+        print("✅ PaymentIntent succeeded:", session['id'])
+
+        try:
+            order = OrderModel.objects.get(
+                stripe_checkout_session_id=session['id']
+            )
+            order.is_paid = True
+            order.save()
+            print('Order marked as paid!')
+            return redirect('success')
+        except OrderModel.DoesNotExist:
+            print("⚠️ Order not found for PaymentIntent:", session['id'])
+
+        return redirect('success')
+
+    return JsonResponse({"status": "unhandled_event"})

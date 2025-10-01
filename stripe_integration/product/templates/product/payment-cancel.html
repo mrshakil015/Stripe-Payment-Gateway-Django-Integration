@@ -1,0 +1,73 @@
+{% extends 'master/base.html' %}
+
+{% block content %}
+<style>
+    .card-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .card {
+        background: #fff;
+        padding: 40px;
+        border-radius: 15px;
+        text-align: center;
+        max-width: 400px;
+        width: 90%;
+        box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .icon {
+        font-size: 60px;
+        color: #28a745;
+        margin-bottom: 15px;
+    }
+
+    h2 {
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    p {
+        color: #555;
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 12px 25px;
+        background: #156082;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+        background: #035160;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+<div class="card-container">
+    <div class="card">
+        <div class="icon">❌</div>
+        <h2>Payment Cancelled</h2>
+        <p>Your payment was not completed. Please try again or choose another payment method.</p>
+        <a href="{% url 'product_list' %}" class="btn">Back to Shop</a>
+    </div>
+</div>
+
+{% endblock content %}
