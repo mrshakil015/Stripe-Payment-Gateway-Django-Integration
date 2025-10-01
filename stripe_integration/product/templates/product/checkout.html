@@ -14,7 +14,7 @@
                 <span>{{product.price}}/-</span>
                 <span>Stock: {{product.stock}}</span>
             </div>
-            <a href="{% url 'checkout' product.id %}" class="order-btn">Order Now</a>
+            <a href="{% url 'create_payment' product.id %}" class="order-btn">Pay Now</a>
         </div>
     </div>
 
